@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">gpsdraw</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="green">Green</string>
+    <string name="white">White</string>
+    <string name="black">Black</string>
+    <string name="red">Red</string>
+    <string name="blue">Blue</string>
+    <string name="pen">Pen</string>
+    <string name="location">Location</string>
+    <string name="drawing_id">Drawing ID</string>
+
+</resources>
