@@ -62,11 +62,23 @@
                 android:layout_width="match_parent"
                 android:layout_height="184dp" >
 
-                <Button
-                    android:id="@+id/buttonPenDown"
+                <LinearLayout
                     android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Pen Down" />
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <Switch
+                        android:id="@+id/switchPen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pen" />
+
+                    <Button
+                        android:id="@+id/buttonShowMap"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Show Map" />
+                </LinearLayout>
 
                     <RadioGroup
                         android:id="@+id/radioGroupColors"

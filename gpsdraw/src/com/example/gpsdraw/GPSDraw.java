@@ -11,6 +11,8 @@ import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
 import com.google.android.gms.internal.et;
 import com.google.android.gms.location.LocationClient;
+import com.google.android.gms.location.LocationListener;
+import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
@@ -33,6 +35,7 @@ import android.content.IntentSender;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -49,6 +52,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.Switch;
@@ -70,13 +74,12 @@ public class GPSDraw extends Activity implements
 	private static double latitude = 0;
 	private static double longitude = 0;
 	private static boolean updateLatLng = false;
+	private static boolean penState = false;
 
 	public static List<Stroke> strokes;
 
 	public static class Stroke {
 		public int color;
-		public PolylineOptions po;
-		public Polyline pl;
 		public List<LatLng> path;
 		public Stroke() {
 			path = new LinkedList<LatLng>();
@@ -97,6 +100,7 @@ public class GPSDraw extends Activity implements
 		Toast.makeText(this, "Connected LocationClient", Toast.LENGTH_SHORT)
 				.show();
 		strokes = new LinkedList<Stroke>();
+		MapsInitializer.initialize(this);
 	}
 
 	@Override
@@ -141,7 +145,6 @@ public class GPSDraw extends Activity implements
 				Bundle savedInstanceState) {
 			final View rootView = inflater.inflate(
 					R.layout.fragment_drawcanvas, container, false);
-			MapsInitializer.initialize(getActivity());
 			switch (GooglePlayServicesUtil
 					.isGooglePlayServicesAvailable(getActivity())) {
 			case ConnectionResult.SUCCESS:
@@ -156,39 +159,31 @@ public class GPSDraw extends Activity implements
 				gm.getUiSettings().setScrollGesturesEnabled(false);
 				gm.getUiSettings().setZoomGesturesEnabled(false);
 
+				/*
 				for (GPSDraw.Stroke s : strokes)
-					s.pl = gm.addPolyline(s.po.addAll(s.pl.getPoints()));
-
-				Stroke s = new GPSDraw.Stroke();
-				strokes.add(s);
-				s.po = new PolylineOptions().width(10).color(color);
-				s.pl = gm.addPolyline(s.po);
-
-				gm.setOnMapClickListener(new OnMapClickListener() {
-					@Override
-					public void onMapClick(LatLng arg0) {
-						Stroke s = strokes.get(strokes.size() - 1);
-						List<LatLng> ps = s.pl.getPoints();
-						ps.add(arg0);
-						s.pl.setPoints(ps);
-						Toast.makeText(getActivity(),
-								arg0.latitude + "," + arg0.longitude,
-								Toast.LENGTH_SHORT).show();
-					}
-				});
+				{
+					if (s.po != null)
+						s.pl = gm.addPolyline(s.po.addAll(s.path));
+					Toast.makeText(getActivity(), "added stroke: "+s.path.size(),
+							Toast.LENGTH_SHORT).show();
+				}*/
 				
-				gm.setOnCameraChangeListener(new OnCameraChangeListener() {
-					@Override
-					public void onCameraChange(CameraPosition arg0) {
-						//update position
-						latitude = arg0.target.latitude;
-						longitude = arg0.target.longitude;
-						lastLocation = "(" + latitude + "," + longitude + ")";						
-						Toast.makeText(getActivity(),
-								lastLocation,
-								Toast.LENGTH_SHORT).show();						
-					}
-				});
+
+				for (GPSDraw.Stroke s : strokes)
+				{
+					PolylineOptions po = new PolylineOptions().width(10).color(s.color);
+					gm.addPolyline(po.addAll(s.path));
+				}
+
+				//Stroke s = new GPSDraw.Stroke();
+				//strokes.add(s);
+				if (strokes.size() > 0)
+				{
+					Stroke s = strokes.get(strokes.size() - 1);
+					PolylineOptions po = new PolylineOptions().width(10).color(color);
+					gm.addPolyline(po.addAll(s.path));
+				}
+
 				break;
 			case ConnectionResult.SERVICE_MISSING:
 				Toast.makeText(getActivity(), "Missing service",
@@ -211,12 +206,11 @@ public class GPSDraw extends Activity implements
 					} else {
 						gm.getUiSettings().setScrollGesturesEnabled(true);
 					}
-					updateLatLng = true;
 				}
 			});
 
 			Button btnPenUp = (Button) rootView
-					.findViewById(R.id.buttonPenUp);
+					.findViewById(R.id.buttonBack);
 			btnPenUp.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
@@ -258,9 +252,23 @@ public class GPSDraw extends Activity implements
 					.findViewById(R.id.textViewLocation);
 			locationView.setText(lastLocation);
 
-			Button btnPenDown = (Button) rootView
-					.findViewById(R.id.buttonPenDown);
-			btnPenDown.setOnClickListener(new OnClickListener() {
+			Switch sPen = (Switch) rootView.findViewById(R.id.switchPen);
+			sPen.setChecked(penState);
+			sPen.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+				@Override
+				public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+					if (isChecked)
+					{
+						Stroke s = new GPSDraw.Stroke();
+						strokes.add(s);
+						//s.po = new PolylineOptions().width(10).color(color);
+					}
+					penState = isChecked;
+				}
+			});
+			Button btnShowMap = (Button) rootView
+					.findViewById(R.id.buttonShowMap);
+			btnShowMap.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					getFragmentManager().beginTransaction()
@@ -281,6 +289,7 @@ public class GPSDraw extends Activity implements
 
 			EditText etGroupId = (EditText) rootView
 					.findViewById(R.id.editTextGroupId);
+			etGroupId.setText(groupId);					
 			etGroupId.addTextChangedListener(new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start,
@@ -302,6 +311,7 @@ public class GPSDraw extends Activity implements
 
 			EditText etDrawingId = (EditText) rootView
 					.findViewById(R.id.editTextDrawingId);
+			etDrawingId.setText(drawingId);
 			etDrawingId.addTextChangedListener(new TextWatcher() {
 				@Override
 				public void onTextChanged(CharSequence s, int start,
@@ -321,11 +331,32 @@ public class GPSDraw extends Activity implements
 				}
 			});
 
+	
+			
 			EditText et = (EditText) rootView.findViewById(R.id.editTextDebug);
 			et.setText(debugMessage);
 
 			RadioGroup rgColors = (RadioGroup) rootView
 					.findViewById(R.id.radioGroupColors);
+			switch(color)
+			{
+				case Color.BLACK:
+					((RadioButton)rootView.findViewById(R.id.radioButtonColorBlack)).setChecked(true);
+					break;
+				case Color.BLUE:
+					((RadioButton)rootView.findViewById(R.id.radioButtonColorBlue)).setChecked(true);
+					break;
+				case Color.GREEN:
+					((RadioButton)rootView.findViewById(R.id.radioButtonColorGreen)).setChecked(true);
+					break;
+				case Color.RED:
+					((RadioButton)rootView.findViewById(R.id.radioButtonColorRed)).setChecked(true);
+					break;
+				case Color.WHITE:
+					((RadioButton)rootView.findViewById(R.id.radioButtonColorWhite)).setChecked(true);
+					break;
+					
+			}
 			rgColors.setOnCheckedChangeListener(new OnCheckedChangeListener() {
 				@Override
 				public void onCheckedChanged(RadioGroup group, int checkedId) {
@@ -414,15 +445,50 @@ public class GPSDraw extends Activity implements
 		}
 	}
 
+	public void grabLocation()
+	{
+		if (penState)
+		{
+			Location cl = locationClient.getLastLocation();
+			latitude = cl.getLatitude();
+			longitude = cl.getLongitude();
+			lastLocation = "(" + latitude + "," + longitude + ")";
+		}
+	}
+	
+	public Stroke getLastStroke()
+	{
+		Stroke s = null;
+		if (strokes.size() > 0)
+			s = strokes.get(strokes.size() - 1);
+		return s;
+	}
+	
 	@Override
 	public void onConnected(Bundle arg0) {
 		Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
 		System.err.printf("connected");
-		Location cl = locationClient.getLastLocation();
-		latitude = cl.getLatitude();
-		longitude = cl.getLongitude();
-		lastLocation = "(" + latitude + "," + longitude + ")";
+		grabLocation();
 		updateUI();
+		locationClient.requestLocationUpdates(new LocationRequest().setInterval(5000), new LocationListener() {
+			@Override
+			public void onLocationChanged(Location arg0) {
+				if (penState)
+				{
+					latitude = arg0.getLatitude();
+					longitude = arg0.getLongitude();
+					lastLocation = "(" + latitude + "," + longitude + ")";
+					
+					Stroke s = getLastStroke();
+					if (s != null)
+						s.path.add(new LatLng(latitude, longitude));
+					
+					updateUI();
+					Toast.makeText(GPSDraw.this, "requestLocationUpdates:"+lastLocation, Toast.LENGTH_SHORT).show();
+				}
+				polyline = null;
+			}
+		});
 	}
 
 	@Override
@@ -431,4 +497,6 @@ public class GPSDraw extends Activity implements
 		System.err.printf("disconnected");
 	}
 
+
+	
 }

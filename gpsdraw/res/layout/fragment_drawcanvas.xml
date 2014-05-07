@@ -17,17 +17,17 @@
         android:layout_weight="0.80" >
 
         <Button
-            android:id="@+id/buttonPenUp"
+            android:id="@+id/buttonBack"
             style="?android:attr/buttonStyleSmall"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/pen_up" />
+            android:text="Back" />
 
         <Switch
             android:id="@+id/switchLock"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@string/lock" />
+            android:text="Lock" />
 
     </LinearLayout>
 
