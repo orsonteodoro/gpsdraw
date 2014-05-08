@@ -60,7 +60,7 @@
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="184dp" >
+                android:layout_height="wrap_content" >
 
                 <LinearLayout
                     android:layout_width="wrap_content"
@@ -78,44 +78,21 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Show Map" />
+
+                    <Button
+                        android:id="@+id/buttonPickColor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pick Color" />
+
                 </LinearLayout>
 
-                    <RadioGroup
-                        android:id="@+id/radioGroupColors"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content" >
-                                            
-                    <RadioButton
-                        android:id="@+id/radioButtonColorBlack"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="@string/black" />
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
 
-                    <RadioButton
-                        android:id="@+id/radioButtonColorWhite"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/white" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonColorGreen"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/green" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonColorRed"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/red" />
-
-                    <RadioButton
-                        android:id="@+id/radioButtonColorBlue"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/blue" />
-                    </RadioGroup>
+                </LinearLayout>
             </LinearLayout>
 
         </LinearLayout>

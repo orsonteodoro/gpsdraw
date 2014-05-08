@@ -4,6 +4,8 @@ import java.lang.Object;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
+import java.util.Timer;
+import java.util.TimerTask;
 import java.util.UUID;
 
 import com.google.android.gms.common.ConnectionResult;
@@ -26,17 +28,22 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.IntentSender;
+import android.content.pm.ActivityInfo;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.graphics.Point;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.os.PowerManager.WakeLock;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.view.DragEvent;
@@ -44,17 +51,22 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
+import android.view.SurfaceHolder;
+import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.SeekBar;
+import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -75,6 +87,8 @@ public class GPSDraw extends Activity implements
 	private static double longitude = 0;
 	private static boolean updateLatLng = false;
 	private static boolean penState = false;
+	PowerManager powerManager;
+	WakeLock wakeLock;
 
 	public static List<Stroke> strokes;
 
@@ -97,17 +111,28 @@ public class GPSDraw extends Activity implements
 		}
 		locationClient = new LocationClient(this, this, this);
 		locationClient.connect();
-		Toast.makeText(this, "Connected LocationClient", Toast.LENGTH_SHORT)
-				.show();
 		strokes = new LinkedList<Stroke>();
 		MapsInitializer.initialize(this);
+		getWindow().addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON); //force keep awake
+		setRequestedOrientation (ActivityInfo.SCREEN_ORIENTATION_PORTRAIT); //force portrait
+		
+		powerManager = (PowerManager) getSystemService(POWER_SERVICE);
+		wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
+		        "MyWakelockTag");
+		wakeLock.acquire();	
 	}
 
 	@Override
 	protected void onStop() {
 		super.onStop();
-		Toast.makeText(this, "Disconnecting", Toast.LENGTH_SHORT).show();
+	}
+	
+	@SuppressLint("Wakelock")
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
 		locationClient.disconnect();
+		wakeLock.release();
 	}
 
 	@Override
@@ -130,13 +155,63 @@ public class GPSDraw extends Activity implements
 		return super.onOptionsItemSelected(item);
 	}
 
+
+	/**
+	 * ColorWheel Fragment
+	 */
+	public static class ColorWheelFragment extends Fragment {
+		ColorWheel cw;
+		ColorWheelChoice cwc;
+		public ColorWheelFragment() {
+		}
+
+		@Override
+		public View onCreateView(LayoutInflater inflater, ViewGroup container,
+				Bundle savedInstanceState) {
+			final View rootView = inflater.inflate(R.layout.fragment_colorwheel,
+					container, false);
+
+			cwc = (ColorWheelChoice) rootView
+					.findViewById(R.id.colorWheelChoice1);
+			cwc.setColor(Color.red(color)/255.0f, Color.green(color)/255.0f, Color.blue(color)/255.0f);
+			
+			cw = (ColorWheel) rootView
+					.findViewById(R.id.colorWheel1);
+			cw.setOnTouchListener(new OnTouchListener() {
+				@Override
+				public boolean onTouch(View v, MotionEvent event) {
+					color = cw.bmp.getPixel((int)event.getX(), (int)event.getY());
+					cwc.setColor(Color.red(color)/255.0f, Color.green(color)/255.0f, Color.blue(color)/255.0f);
+					cwc.invalidate();
+					return false;
+				}
+			});			
+			
+
+			Button btnBack = (Button) rootView
+					.findViewById(R.id.buttonColorWheelBack);
+			btnBack.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, new MainFragment())
+							.commit();
+				}
+			});
+			return rootView;
+		}
+
+	}	
+	
 	/**
 	 * Google Maps fragment
 	 */
-	public static class DrawCanvasFragment extends Fragment {
+	public static class GoogleMapFragment extends Fragment {
 		GoogleMap gm;
+		Timer timer;
+		Polyline pl;
 
-		public DrawCanvasFragment() {
+		public GoogleMapFragment() {
 
 		}
 
@@ -148,8 +223,6 @@ public class GPSDraw extends Activity implements
 			switch (GooglePlayServicesUtil
 					.isGooglePlayServicesAvailable(getActivity())) {
 			case ConnectionResult.SUCCESS:
-				Toast.makeText(getActivity(), "Connect success",
-						Toast.LENGTH_SHORT).show();
 				MapFragment mf = ((MapFragment) getFragmentManager().findFragmentById(
 						R.id.map));
 				gm = mf.getMap();
@@ -159,31 +232,32 @@ public class GPSDraw extends Activity implements
 				gm.getUiSettings().setScrollGesturesEnabled(false);
 				gm.getUiSettings().setZoomGesturesEnabled(false);
 
-				/*
-				for (GPSDraw.Stroke s : strokes)
-				{
-					if (s.po != null)
-						s.pl = gm.addPolyline(s.po.addAll(s.path));
-					Toast.makeText(getActivity(), "added stroke: "+s.path.size(),
-							Toast.LENGTH_SHORT).show();
-				}*/
-				
-
 				for (GPSDraw.Stroke s : strokes)
 				{
 					PolylineOptions po = new PolylineOptions().width(10).color(s.color);
 					gm.addPolyline(po.addAll(s.path));
 				}
 
-				//Stroke s = new GPSDraw.Stroke();
-				//strokes.add(s);
 				if (strokes.size() > 0)
 				{
 					Stroke s = strokes.get(strokes.size() - 1);
 					PolylineOptions po = new PolylineOptions().width(10).color(color);
-					gm.addPolyline(po.addAll(s.path));
+					pl = gm.addPolyline(po.addAll(s.path));
 				}
 
+				/*
+				timer = new Timer();
+				timer.schedule(new TimerTask() {
+					@Override
+					public void run() {
+						if (pl != null)
+						{
+							Stroke s = getLastStroke();
+							pl.setPoints(s.path);
+						}
+					}
+				}, 0, 100);*/
+				
 				break;
 			case ConnectionResult.SERVICE_MISSING:
 				Toast.makeText(getActivity(), "Missing service",
@@ -209,9 +283,9 @@ public class GPSDraw extends Activity implements
 				}
 			});
 
-			Button btnPenUp = (Button) rootView
-					.findViewById(R.id.buttonBack);
-			btnPenUp.setOnClickListener(new OnClickListener() {
+			Button btnBack = (Button) rootView
+					.findViewById(R.id.buttonMapBack);
+			btnBack.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
 					getFragmentManager().beginTransaction()
@@ -232,6 +306,9 @@ public class GPSDraw extends Activity implements
 		}
 	}
 
+	
+	
+	
 	/**
 	 * Main UI Fragment
 	 */
@@ -272,7 +349,7 @@ public class GPSDraw extends Activity implements
 				@Override
 				public void onClick(View v) {
 					getFragmentManager().beginTransaction()
-							.replace(R.id.container, new DrawCanvasFragment())
+							.replace(R.id.container, new GoogleMapFragment())
 							.commit();
 				}
 			});
@@ -295,8 +372,6 @@ public class GPSDraw extends Activity implements
 				public void onTextChanged(CharSequence s, int start,
 						int before, int count) {
 					groupId = s.toString();
-					Toast.makeText(getActivity(), groupId, Toast.LENGTH_SHORT)
-							.show();
 				}
 
 				@Override
@@ -317,8 +392,6 @@ public class GPSDraw extends Activity implements
 				public void onTextChanged(CharSequence s, int start,
 						int before, int count) {
 					drawingId = s.toString();
-					Toast.makeText(getActivity(), drawingId, Toast.LENGTH_SHORT)
-							.show();
 				}
 
 				@Override
@@ -331,59 +404,21 @@ public class GPSDraw extends Activity implements
 				}
 			});
 
-	
-			
 			EditText et = (EditText) rootView.findViewById(R.id.editTextDebug);
 			et.setText(debugMessage);
-
-			RadioGroup rgColors = (RadioGroup) rootView
-					.findViewById(R.id.radioGroupColors);
-			switch(color)
-			{
-				case Color.BLACK:
-					((RadioButton)rootView.findViewById(R.id.radioButtonColorBlack)).setChecked(true);
-					break;
-				case Color.BLUE:
-					((RadioButton)rootView.findViewById(R.id.radioButtonColorBlue)).setChecked(true);
-					break;
-				case Color.GREEN:
-					((RadioButton)rootView.findViewById(R.id.radioButtonColorGreen)).setChecked(true);
-					break;
-				case Color.RED:
-					((RadioButton)rootView.findViewById(R.id.radioButtonColorRed)).setChecked(true);
-					break;
-				case Color.WHITE:
-					((RadioButton)rootView.findViewById(R.id.radioButtonColorWhite)).setChecked(true);
-					break;
-					
-			}
-			rgColors.setOnCheckedChangeListener(new OnCheckedChangeListener() {
+			
+			Button btnPickColor = (Button) rootView.findViewById(R.id.buttonPickColor);
+			btnPickColor.setOnClickListener(new OnClickListener() {
 				@Override
-				public void onCheckedChanged(RadioGroup group, int checkedId) {
-					switch (checkedId) {
-					case R.id.radioButtonColorBlack:
-						color = Color.BLACK;
-						break;
-					case R.id.radioButtonColorBlue:
-						color = Color.BLUE;
-						break;
-					case R.id.radioButtonColorGreen:
-						color = Color.GREEN;
-						break;
-					case R.id.radioButtonColorRed:
-						color = Color.RED;
-						break;
-					case R.id.radioButtonColorWhite:
-						color = Color.WHITE;
-						break;
-					}
+				public void onClick(View v) {
+					getFragmentManager().beginTransaction()
+							.replace(R.id.container, new ColorWheelFragment())
+							.commit();
 				}
-			});
-
+			});		
+			
 			if (updateLatLng)
 			{
-				Toast.makeText(getActivity(), lastLocation, Toast.LENGTH_SHORT)
-				.show();
 				locationView.setText(lastLocation);
 				updateLatLng = false;
 			}
@@ -456,7 +491,7 @@ public class GPSDraw extends Activity implements
 		}
 	}
 	
-	public Stroke getLastStroke()
+	public static Stroke getLastStroke()
 	{
 		Stroke s = null;
 		if (strokes.size() > 0)
@@ -466,11 +501,9 @@ public class GPSDraw extends Activity implements
 	
 	@Override
 	public void onConnected(Bundle arg0) {
-		Toast.makeText(this, "Connected", Toast.LENGTH_SHORT).show();
-		System.err.printf("connected");
 		grabLocation();
 		updateUI();
-		locationClient.requestLocationUpdates(new LocationRequest().setInterval(5000), new LocationListener() {
+		locationClient.requestLocationUpdates(new LocationRequest().setInterval(100), new LocationListener() {
 			@Override
 			public void onLocationChanged(Location arg0) {
 				if (penState)
@@ -484,19 +517,12 @@ public class GPSDraw extends Activity implements
 						s.path.add(new LatLng(latitude, longitude));
 					
 					updateUI();
-					Toast.makeText(GPSDraw.this, "requestLocationUpdates:"+lastLocation, Toast.LENGTH_SHORT).show();
 				}
-				polyline = null;
 			}
 		});
 	}
 
 	@Override
 	public void onDisconnected() {
-		// TODO Auto-generated method stub
-		System.err.printf("disconnected");
 	}
-
-
-	
 }
