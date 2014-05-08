@@ -1,29 +1,19 @@
 package com.example.gpsdraw;
 
-import java.lang.Object;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Queue;
-import java.util.Timer;
-import java.util.TimerTask;
 import java.util.UUID;
 
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GooglePlayServicesClient;
 import com.google.android.gms.common.GooglePlayServicesUtil;
-import com.google.android.gms.internal.et;
 import com.google.android.gms.location.LocationClient;
 import com.google.android.gms.location.LocationListener;
 import com.google.android.gms.location.LocationRequest;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
-import com.google.android.gms.maps.GoogleMap.OnCameraChangeListener;
-import com.google.android.gms.maps.GoogleMap.OnMapClickListener;
-import com.google.android.gms.maps.GoogleMap.OnMapLoadedCallback;
-import com.google.android.gms.maps.GoogleMap.OnMyLocationChangeListener;
 import com.google.android.gms.maps.MapFragment;
 import com.google.android.gms.maps.MapsInitializer;
-import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
@@ -36,38 +26,26 @@ import android.app.Fragment;
 import android.app.FragmentManager;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.graphics.Point;
 import android.location.Location;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.DragEvent;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.MotionEvent;
-import android.view.SurfaceHolder;
-import android.view.SurfaceView;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnDragListener;
 import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.CompoundButton;
 import android.widget.EditText;
-import android.widget.RadioButton;
-import android.widget.RadioGroup;
-import android.widget.RadioGroup.OnCheckedChangeListener;
-import android.widget.SeekBar;
-import android.widget.SeekBar.OnSeekBarChangeListener;
 import android.widget.Switch;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -285,29 +263,6 @@ public class GPSDraw extends Activity implements
 					s.po = new PolylineOptions().width(10).color(color);
 					s.pl = gm.addPolyline(s.po);
 				}
-				
-				Toast.makeText(getActivity(), "npolylines="+strokes.size(),
-						Toast.LENGTH_SHORT).show();				
-				
-				Button btnUpdate = (Button) rootView.findViewById(R.id.buttonMapUpdate);
-				btnUpdate.setOnClickListener(new OnClickListener() {
-					@Override
-					public void onClick(View v) {
-						Stroke s = getLastStroke();
-						List<LatLng> ps = pl.getPoints();
-						if (cheese != null)
-						{
-							ps.add(cheese);
-							cheese = null;
-						}
-						pl.setPoints(ps);
-						Toast.makeText(getActivity(), "updated path",
-								Toast.LENGTH_SHORT).show();
-					}
-				});
-				
-
-				break;
 			case ConnectionResult.SERVICE_MISSING:
 				Toast.makeText(getActivity(), "Missing service",
 						Toast.LENGTH_SHORT).show();
