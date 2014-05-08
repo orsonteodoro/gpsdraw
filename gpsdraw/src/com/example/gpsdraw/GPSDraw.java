@@ -42,6 +42,7 @@ import android.graphics.Point;
 import android.location.Location;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
 import android.os.PowerManager;
 import android.os.PowerManager.WakeLock;
 import android.text.Editable;
@@ -87,16 +88,26 @@ public class GPSDraw extends Activity implements
 	private static double longitude = 0;
 	private static boolean updateLatLng = false;
 	private static boolean penState = false;
+	
+	private static int FASTEST_UPDATE = 1000;
+	private static int NORMAL_UPDATE = 5000;
+	
 	PowerManager powerManager;
 	WakeLock wakeLock;
+	static LatLng cheese;
 
 	public static List<Stroke> strokes;
 
 	public static class Stroke {
+		public PolylineOptions po;
+		public Polyline pl;
+		public boolean touched;
+		
 		public int color;
 		public List<LatLng> path;
 		public Stroke() {
 			path = new LinkedList<LatLng>();
+			touched = false;
 		}
 	};
 
@@ -208,13 +219,39 @@ public class GPSDraw extends Activity implements
 	 */
 	public static class GoogleMapFragment extends Fragment {
 		GoogleMap gm;
-		Timer timer;
 		Polyline pl;
+		private Handler handler = new Handler();
 
 		public GoogleMapFragment() {
 
 		}
 
+		private Runnable runnable = new Runnable() {
+			   @Override
+			   public void run() {
+				    if (pl != null)
+				    {
+						Stroke s = getLastStroke();
+						List<LatLng> ps = pl.getPoints();
+						if (cheese != null)
+						{
+							ps.add(cheese);
+							cheese = null;
+						}
+						pl.setPoints(ps);
+						Toast.makeText(getActivity(), "auto updated path",
+								Toast.LENGTH_SHORT).show();
+				    }
+			        handler.postDelayed(this, FASTEST_UPDATE);
+			   }
+			};		
+		
+		@Override
+		public void onStart() {
+			super.onStart();
+			handler.postDelayed(runnable, FASTEST_UPDATE);
+		}
+		
 		@Override
 		public View onCreateView(LayoutInflater inflater, ViewGroup container,
 				Bundle savedInstanceState) {
@@ -225,6 +262,7 @@ public class GPSDraw extends Activity implements
 			case ConnectionResult.SUCCESS:
 				MapFragment mf = ((MapFragment) getFragmentManager().findFragmentById(
 						R.id.map));
+				
 				gm = mf.getMap();
 				gm.setMapType(GoogleMap.MAP_TYPE_SATELLITE);
 				LatLng place = new LatLng(latitude, longitude);
@@ -232,32 +270,43 @@ public class GPSDraw extends Activity implements
 				gm.getUiSettings().setScrollGesturesEnabled(false);
 				gm.getUiSettings().setZoomGesturesEnabled(false);
 
+				
+				//draw previous strokes
 				for (GPSDraw.Stroke s : strokes)
 				{
-					PolylineOptions po = new PolylineOptions().width(10).color(s.color);
-					gm.addPolyline(po.addAll(s.path));
+					if (s.touched)
+						pl = s.pl = gm.addPolyline(s.po.addAll(s.pl.getPoints()));
 				}
 
-				if (strokes.size() > 0)
+				Stroke s = getLastStroke();
+				if (s != null && s.touched == false)
 				{
-					Stroke s = strokes.get(strokes.size() - 1);
-					PolylineOptions po = new PolylineOptions().width(10).color(color);
-					pl = gm.addPolyline(po.addAll(s.path));
+					s.touched = true;
+					s.po = new PolylineOptions().width(10).color(color);
+					s.pl = gm.addPolyline(s.po);
 				}
-
-				/*
-				timer = new Timer();
-				timer.schedule(new TimerTask() {
-					@Override
-					public void run() {
-						if (pl != null)
-						{
-							Stroke s = getLastStroke();
-							pl.setPoints(s.path);
-						}
-					}
-				}, 0, 100);*/
 				
+				Toast.makeText(getActivity(), "npolylines="+strokes.size(),
+						Toast.LENGTH_SHORT).show();				
+				
+				Button btnUpdate = (Button) rootView.findViewById(R.id.buttonMapUpdate);
+				btnUpdate.setOnClickListener(new OnClickListener() {
+					@Override
+					public void onClick(View v) {
+						Stroke s = getLastStroke();
+						List<LatLng> ps = pl.getPoints();
+						if (cheese != null)
+						{
+							ps.add(cheese);
+							cheese = null;
+						}
+						pl.setPoints(ps);
+						Toast.makeText(getActivity(), "updated path",
+								Toast.LENGTH_SHORT).show();
+					}
+				});
+				
+
 				break;
 			case ConnectionResult.SERVICE_MISSING:
 				Toast.makeText(getActivity(), "Missing service",
@@ -279,6 +328,7 @@ public class GPSDraw extends Activity implements
 						gm.getUiSettings().setScrollGesturesEnabled(false);
 					} else {
 						gm.getUiSettings().setScrollGesturesEnabled(true);
+						cheese = null;
 					}
 				}
 			});
@@ -288,12 +338,18 @@ public class GPSDraw extends Activity implements
 			btnBack.setOnClickListener(new OnClickListener() {
 				@Override
 				public void onClick(View v) {
+					pl = null;
 					getFragmentManager().beginTransaction()
 							.replace(R.id.container, new MainFragment())
 							.commit();
 				}
 			});
 			return rootView;
+		}
+
+		protected void runOnUiThread(Runnable runnable) {
+			// TODO Auto-generated method stub
+			
 		}
 
 		@Override
@@ -338,7 +394,6 @@ public class GPSDraw extends Activity implements
 					{
 						Stroke s = new GPSDraw.Stroke();
 						strokes.add(s);
-						//s.po = new PolylineOptions().width(10).color(color);
 					}
 					penState = isChecked;
 				}
@@ -503,7 +558,7 @@ public class GPSDraw extends Activity implements
 	public void onConnected(Bundle arg0) {
 		grabLocation();
 		updateUI();
-		locationClient.requestLocationUpdates(new LocationRequest().setInterval(100), new LocationListener() {
+		locationClient.requestLocationUpdates(new LocationRequest().setPriority(LocationRequest.PRIORITY_HIGH_ACCURACY).setInterval(NORMAL_UPDATE).setFastestInterval(FASTEST_UPDATE), new LocationListener() {
 			@Override
 			public void onLocationChanged(Location arg0) {
 				if (penState)
@@ -511,6 +566,8 @@ public class GPSDraw extends Activity implements
 					latitude = arg0.getLatitude();
 					longitude = arg0.getLongitude();
 					lastLocation = "(" + latitude + "," + longitude + ")";
+					
+					cheese = new LatLng(latitude, longitude);
 					
 					Stroke s = getLastStroke();
 					if (s != null)
