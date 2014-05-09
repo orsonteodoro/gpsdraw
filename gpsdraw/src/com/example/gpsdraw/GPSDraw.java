@@ -18,6 +18,7 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import edu.uci.ics.ics163.gpsdrawupload.StrokeManager;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -73,6 +74,8 @@ public class GPSDraw extends Activity implements
 	PowerManager powerManager;
 	WakeLock wakeLock;
 	static LatLng cheese;
+	
+	StrokeManager strokeManager;
 
 	public static List<Stroke> strokes;
 
@@ -109,6 +112,8 @@ public class GPSDraw extends Activity implements
 		wakeLock = powerManager.newWakeLock(PowerManager.PARTIAL_WAKE_LOCK,
 		        "MyWakelockTag");
 		wakeLock.acquire();	
+		
+		strokeManager = new StrokeManager();
 	}
 
 	@Override
