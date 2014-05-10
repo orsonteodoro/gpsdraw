@@ -1,0 +1,142 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    tools:context="com.example.gpsdraw.GPSDraw$PlaceholderFragment" >
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical" >
+
+        <EditText
+            android:id="@+id/editTextGroupId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Group ID" >
+
+            <requestFocus />
+        </EditText>
+
+        <EditText
+            android:id="@+id/editTextDrawingId"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:ems="10"
+            android:hint="Drawing ID" />
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" >
+
+            <LinearLayout
+                android:layout_width="99dp"
+                android:layout_height="wrap_content" >
+
+                <TextView
+                    android:id="@+id/textViewLocation"
+                    android:layout_width="286dp"
+                    android:layout_height="wrap_content"
+                    android:text="Location"
+                    android:textAppearance="?android:attr/textAppearanceLarge" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="132dp" >
+
+                <Switch
+                    android:id="@+id/switchPen"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Pen" />
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:orientation="vertical" >
+
+                    <RadioGroup
+                        android:id="@+id/radioGroup1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content" >
+                                            
+                    <RadioButton
+                        android:id="@+id/RadioButtonColorBlack"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:checked="true"
+                        android:text="@string/black" />
+
+                    <RadioButton
+                        android:id="@+id/RadioButtonColorWhite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/white" />
+
+                    <RadioButton
+                        android:id="@+id/RadioButtonColorGreen"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/green" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonColorRed"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/red" />
+
+                    <RadioButton
+                        android:id="@+id/radioButtonColorBlue"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="@string/blue" />
+                    </RadioGroup>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <EditText
+            android:id="@+id/editTextDebug"
+            android:layout_width="match_parent"
+            android:layout_height="103dp"
+            android:ems="10"
+            android:inputType="textMultiLine" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.19" >
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <TextView
+                android:id="@+id/textViewBufferFullness"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_weight="0.73"
+                android:text="1000"
+                android:textAppearance="?android:attr/textAppearanceMedium" />
+
+            <Button
+                android:id="@+id/buttonUpload"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Upload" />
+        </LinearLayout>
+    </LinearLayout>
+
+</RelativeLayout>

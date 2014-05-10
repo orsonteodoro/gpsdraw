@@ -1,0 +1,38 @@
+1399194836085	Move file
+1399195711386	Rename field 'button1'
+1399195735351	Rename field 'button2'
+1399314712874	Extracts string 'Green' into R.string.green
+1399314734552	Extracts string 'White' into R.string.white
+1399314754235	Extracts string 'Black' into R.string.black
+1399314767397	Extracts string 'Red' into R.string.red
+1399314773325	Extracts string 'Blue' into R.string.blue
+1399314802073	Extracts string 'Pen' into R.string.pen
+1399314808006	Extracts string 'Location' into R.string.location
+1399314816887	Extracts string 'Drawing ID' into R.string.drawing_id
+1399314821630	Extracts string 'Group ID' into R.string.group_id
+1399314888278	Extracts string 'Upload' into R.string.upload
+1399323150860	Rename field 'RadioButtonColorWhite'
+1399323159004	Rename field 'RadioButtonColorGreen'
+1399323316025	Rename field 'radioGroup1'
+1399326455228	Rename resource 'fragment_colorlist.xml'
+1399326541194	Delete element
+1399326544927	Delete element
+1399327196315	Rename type 'PlaceholderFragment'
+1399334045812	Delete element
+1399346357001	Delete element
+1399346629330	Rename resource 'fragment_draw.xml'
+1399346794648	Extracts string 'Done' into R.string.done
+1399346862199	Extracts string 'Done' into R.string.done
+1399347109329	Rename type 'WebViewFragment'
+1399355888287	Rename field 'buttonDrawCanvasDone'
+1399355918099	Extracts string 'Back' into R.string.back
+1399355926203	Extracts string 'Lock' into R.string.lock
+1399360414989	Extracts string 'New' into R.string.new
+1399360455199	Extracts string 'Draw' into R.string.draw
+1399360475600	Extracts string 'Debug Messages' into R.string.debug_messages
+1399360817195	Rename field 'buttonDraw'
+1399360843529	Rename field 'buttonPenUp'
+1399360979287	Rename local variable 'btnDraw'
+1399361088340	Rename local variable 'btnDone'
+1399361194763	Extracts string 'Pen Up' into R.string.pen_up
+1399361297986	Rename field 'buttonDrawCanvasBack'

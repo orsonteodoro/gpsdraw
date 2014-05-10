@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <com.example.gpsdraw.ColorWheel
+        android:id="@+id/colorWheel1"
+        android:layout_width="match_parent"
+        android:layout_height="414dp" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="19.75" >
+
+        <Button
+            android:id="@+id/buttonColorWheelBack"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Back" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1.07"
+            android:orientation="vertical" >
+        </LinearLayout>
+
+        <com.example.gpsdraw.ColorWheelChoice
+            android:id="@+id/colorWheelChoice1"
+            android:layout_width="57dp"
+            android:layout_height="41dp" />
+    </LinearLayout>
+
+</LinearLayout>
