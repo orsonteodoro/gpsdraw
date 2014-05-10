@@ -1,5 +1,6 @@
 package com.example.gpsdraw;
 
+import java.io.File;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.UUID;
@@ -25,6 +26,7 @@ import android.app.Dialog;
 import android.app.DialogFragment;
 import android.app.Fragment;
 import android.app.FragmentManager;
+import android.content.Context;
 import android.content.IntentSender;
 import android.content.pm.ActivityInfo;
 import android.graphics.Color;
@@ -75,7 +77,7 @@ public class GPSDraw extends Activity implements
 	WakeLock wakeLock;
 	static LatLng cheese;
 	
-	StrokeManager strokeManager;
+	static StrokeManager strokeManager;
 
 	public static List<Stroke> strokes;
 
@@ -127,6 +129,44 @@ public class GPSDraw extends Activity implements
 		super.onDestroy();
 		locationClient.disconnect();
 		wakeLock.release();
+		
+
+		try {
+            trimCache(this);
+           // Toast.makeText(this,"onDestroy " ,Toast.LENGTH_LONG).show();
+        } catch (Exception e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+    }
+    public static void trimCache(Context context) {
+        try {
+           File dir = context.getCacheDir();
+           if (dir != null && dir.isDirectory()) {
+              deleteDir(dir);
+           }
+        } catch (Exception e) {
+           // TODO: handle exception
+        }
+     }
+
+     public static boolean deleteDir(File dir) {
+        if (dir != null && dir.isDirectory()) {
+           String[] children = dir.list();
+           for (int i = 0; i < children.length; i++) {
+              boolean success = deleteDir(new File(dir, children[i]));
+              if (!success) {
+                 return false;
+              }
+           }
+        }
+
+        
+        // The directory is now empty so delete it
+        return dir.delete();
+
+		
 	}
 
 	@Override
@@ -179,7 +219,27 @@ public class GPSDraw extends Activity implements
 					cwc.invalidate();
 					return false;
 				}
-			});			
+			});	
+			
+			Button btnUpload = (Button) rootView
+					.findViewById(R.id.buttonUpload);
+			btnUpload.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(!penState)
+					{
+						strokeManager.upload(groupId, drawingId);
+						
+					}
+					else
+					{
+						
+						Toast.makeText(getActivity(), "Please Lift the Pen",
+								Toast.LENGTH_SHORT).show();
+					}
+					
+				}
+			});
 			
 
 			Button btnBack = (Button) rootView
