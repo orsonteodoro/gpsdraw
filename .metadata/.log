@@ -1898,3 +1898,311 @@ org.eclipse.core.internal.resources.ResourceException: Resource already exists o
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
 !SUBENTRY 1 org.eclipse.core.resources 4 272 2014-05-09 08:23:22.360
 !MESSAGE Resource already exists on disk: '/JSON-java/bin/classes/.gitignore'.
+!SESSION 2014-05-09 20:13:32.918 -----------------------------------------------
+eclipse.buildId=v22.6.2-1085508
+java.version=1.7.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product -product com.android.ide.eclipse.adt.package.product -product com.android.ide.eclipse.adt.package.product -product com.android.ide.eclipse.adt.package.product -product com.android.ide.eclipse.adt.package.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.android.ide.eclipse.adt.package.product -product com.android.ide.eclipse.adt.package.product -product com.android.ide.eclipse.adt.package.product -product com.android.ide.eclipse.adt.package.product -data C:\Users\bontan\Desktop\ics163b\gpsdraw -product com.android.ide.eclipse.adt.package.product
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:40.143
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project JSON-java
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:40.149
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project android-support-v7-appcompat
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:40.150
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project google-play-services_lib
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:40.151
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:40.152
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project gpsdrawupload
+
+!ENTRY org.eclipse.jface 2 0 2014-05-09 20:13:44.336
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-05-09 20:13:44.337
+!MESSAGE A conflict occurred for CTRL+NUMPAD_SUBTRACT:
+Binding(CTRL+NUMPAD_SUBTRACT,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.folding.collapse,Collapse,
+		Collapses the folded region at the current selection,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@ef33ed,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+Binding(CTRL+NUMPAD_SUBTRACT,
+	ParameterizedCommand(Command(tarlog.eclipse.plugins.commands.decreaseFont,Decrease Font,
+		,
+		Category(tarlog.eclipse.plugins.commands.category,Editor Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@3a4db6,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-05-09 20:13:44.337
+!MESSAGE A conflict occurred for CTRL+NUMPAD_ADD:
+Binding(CTRL+NUMPAD_ADD,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.folding.expand,Expand,
+		Expands the folded region at the current selection,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1c3ecf8,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+Binding(CTRL+NUMPAD_ADD,
+	ParameterizedCommand(Command(tarlog.eclipse.plugins.commands.increaseFont,Increase Font,
+		,
+		Category(tarlog.eclipse.plugins.commands.category,Editor Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1facc3c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-05-09 20:13:45.019
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:48.391
+!MESSAGE fileChanged: failed to find manifest package for project gpsdrawupload
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:50.121
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:50.122
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:50.123
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:13:50.125
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+!SESSION 2014-05-09 20:15:49.243 -----------------------------------------------
+eclipse.buildId=v22.6.2-1085508
+java.version=1.7.0_51
+java.vendor=Oracle Corporation
+BootLoader constants: OS=win32, ARCH=x86, WS=win32, NL=en_US
+Framework arguments:  -product com.android.ide.eclipse.adt.package.product
+Command-line arguments:  -os win32 -ws win32 -arch x86 -product com.android.ide.eclipse.adt.package.product
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:15:57.620
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project JSON-java
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:15:57.625
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project android-support-v7-appcompat
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:15:57.626
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project google-play-services_lib
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:15:57.627
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:15:57.627
+!MESSAGE projectOpenedWithWorkspace: failed to find manifest package for project gpsdrawupload
+
+!ENTRY org.eclipse.egit.ui 2 0 2014-05-09 20:16:01.573
+!MESSAGE Warning: EGit couldn't detect the installation path "gitPrefix" of native Git. Hence EGit can't respect system level
+Git settings which might be configured in ${gitPrefix}/etc/gitconfig under the native Git installation directory.
+The most important of these settings is core.autocrlf. Git for Windows by default sets this parameter to true in
+this system level configuration. The Git installation location can be configured on the
+Team > Git > Configuration preference page's 'System Settings' tab.
+This warning can be switched off on the Team > Git > Confirmations and Warnings preference page.
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:05.141
+!MESSAGE fileChanged: failed to find manifest package for project gpsdrawupload
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:05.558
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:05.560
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:05.560
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:05.561
+!MESSAGE fileChanged: failed to find manifest package for project gpsdraw
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:27.001
+!MESSAGE File is Out of sync
+!STACK 0
+com.android.io.StreamException: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/JSON-java/AndroidManifest.xml'.
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:55)
+	at com.android.ide.common.xml.AndroidManifestParser.parse(AndroidManifestParser.java:609)
+	at com.android.ide.eclipse.adt.internal.project.AndroidManifestHelper.parseUnchecked(AndroidManifestHelper.java:75)
+	at com.android.ide.eclipse.adt.internal.build.builders.PreCompilerBuilder.build(PreCompilerBuilder.java:467)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:733)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:514)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:423)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/JSON-java/AndroidManifest.xml'.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:793)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:289)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:49)
+	... 16 more
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:27.423
+!MESSAGE File is Out of sync
+!STACK 0
+com.android.io.StreamException: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/android-support-v7-appcompat/AndroidManifest.xml'.
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:55)
+	at com.android.ide.common.xml.AndroidManifestParser.parse(AndroidManifestParser.java:609)
+	at com.android.ide.eclipse.adt.internal.project.AndroidManifestHelper.parseUnchecked(AndroidManifestHelper.java:75)
+	at com.android.ide.eclipse.adt.internal.build.builders.PreCompilerBuilder.build(PreCompilerBuilder.java:467)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:733)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:514)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:423)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/android-support-v7-appcompat/AndroidManifest.xml'.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:793)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:289)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:49)
+	... 16 more
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:29.251
+!MESSAGE File is Out of sync
+!STACK 0
+com.android.io.StreamException: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/google-play-services_lib/AndroidManifest.xml'.
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:55)
+	at com.android.ide.common.xml.AndroidManifestParser.parse(AndroidManifestParser.java:609)
+	at com.android.ide.eclipse.adt.internal.project.AndroidManifestHelper.parseUnchecked(AndroidManifestHelper.java:75)
+	at com.android.ide.eclipse.adt.internal.build.builders.PreCompilerBuilder.build(PreCompilerBuilder.java:467)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:733)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:514)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:423)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/google-play-services_lib/AndroidManifest.xml'.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:793)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:289)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:49)
+	... 16 more
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:29.641
+!MESSAGE File is Out of sync
+!STACK 0
+com.android.io.StreamException: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/gpsdraw/AndroidManifest.xml'.
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:55)
+	at com.android.ide.common.xml.AndroidManifestParser.parse(AndroidManifestParser.java:609)
+	at com.android.ide.eclipse.adt.internal.project.AndroidManifestHelper.parseUnchecked(AndroidManifestHelper.java:75)
+	at com.android.ide.eclipse.adt.internal.build.builders.PreCompilerBuilder.build(PreCompilerBuilder.java:467)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:733)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:514)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:423)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/gpsdraw/AndroidManifest.xml'.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:793)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:289)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:49)
+	... 16 more
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2014-05-09 20:16:30.103
+!MESSAGE File is Out of sync
+!STACK 0
+com.android.io.StreamException: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/gpsdrawupload/AndroidManifest.xml'.
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:55)
+	at com.android.ide.common.xml.AndroidManifestParser.parse(AndroidManifestParser.java:609)
+	at com.android.ide.eclipse.adt.internal.project.AndroidManifestHelper.parseUnchecked(AndroidManifestHelper.java:75)
+	at com.android.ide.eclipse.adt.internal.build.builders.PreCompilerBuilder.build(PreCompilerBuilder.java:467)
+	at org.eclipse.core.internal.events.BuildManager$2.run(BuildManager.java:733)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:206)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:246)
+	at org.eclipse.core.internal.events.BuildManager$1.run(BuildManager.java:299)
+	at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:42)
+	at org.eclipse.core.internal.events.BuildManager.basicBuild(BuildManager.java:302)
+	at org.eclipse.core.internal.events.BuildManager.basicBuildLoop(BuildManager.java:358)
+	at org.eclipse.core.internal.events.BuildManager.build(BuildManager.java:381)
+	at org.eclipse.core.internal.resources.Workspace.buildInternal(Workspace.java:514)
+	at org.eclipse.core.internal.resources.Workspace.build(Workspace.java:423)
+	at org.eclipse.ui.actions.GlobalBuildAction$1.run(GlobalBuildAction.java:180)
+	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
+Caused by: org.eclipse.core.internal.resources.ResourceException: Resource is out of sync with the file system: '/gpsdrawupload/AndroidManifest.xml'.
+	at org.eclipse.core.internal.localstore.FileSystemResourceManager.read(FileSystemResourceManager.java:793)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:289)
+	at org.eclipse.core.internal.resources.File.getContents(File.java:278)
+	at com.android.ide.eclipse.adt.io.IFileWrapper.getContents(IFileWrapper.java:49)
+	... 16 more
+
+!ENTRY org.eclipse.jface 2 0 2014-05-09 20:17:22.106
+!MESSAGE Keybinding conflicts occurred.  They may interfere with normal accelerator operation.
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-05-09 20:17:22.106
+!MESSAGE A conflict occurred for CTRL+NUMPAD_SUBTRACT:
+Binding(CTRL+NUMPAD_SUBTRACT,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.folding.collapse,Collapse,
+		Collapses the folded region at the current selection,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@ba5f89,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+Binding(CTRL+NUMPAD_SUBTRACT,
+	ParameterizedCommand(Command(tarlog.eclipse.plugins.commands.decreaseFont,Decrease Font,
+		,
+		Category(tarlog.eclipse.plugins.commands.category,Editor Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@1d62f3c,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+!SUBENTRY 1 org.eclipse.jface 2 0 2014-05-09 20:17:22.106
+!MESSAGE A conflict occurred for CTRL+NUMPAD_ADD:
+Binding(CTRL+NUMPAD_ADD,
+	ParameterizedCommand(Command(org.eclipse.ui.edit.text.folding.expand,Expand,
+		Expands the folded region at the current selection,
+		Category(org.eclipse.ui.category.textEditor,Text Editing,Text Editing Commands,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@ae52fd,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
+Binding(CTRL+NUMPAD_ADD,
+	ParameterizedCommand(Command(tarlog.eclipse.plugins.commands.increaseFont,Increase Font,
+		,
+		Category(tarlog.eclipse.plugins.commands.category,Editor Commands,null,true),
+		org.eclipse.ui.internal.WorkbenchHandlerServiceHandler@ca8031,
+		,,true),null),
+	org.eclipse.ui.defaultAcceleratorConfiguration,
+	org.eclipse.ui.textEditorScope,,,system)
