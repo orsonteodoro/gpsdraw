@@ -224,7 +224,7 @@ public class GPSDraw extends Activity implements
 				public boolean onTouch(View v, MotionEvent event) {
 					color = cw.bmp.getPixel((int)event.getX(), (int)event.getY());
 					cwc.setColor(Color.red(color)/255.0f, Color.green(color)/255.0f, Color.blue(color)/255.0f);
-					strokeManager.setStrokeColor("s", (int)cwc.r, (int)cwc.g, (int)cwc.b);
+					
 					cwc.invalidate();
 					return false;
 				}
@@ -492,7 +492,6 @@ public class GPSDraw extends Activity implements
 					if(!penState)
 					{
 						strokeManager.upload(groupId, drawingId);
-						
 						Toast.makeText(getActivity(), "Uploaded",
 								Toast.LENGTH_SHORT).show();
 					}
@@ -614,6 +613,7 @@ public class GPSDraw extends Activity implements
 						Point p = new Point(time, latitude, longitude);
 						s.points.add(p);
 						strokeManager.addPoint(s.name, p);
+						strokeManager.setStrokeColor(s.name, Color.red(color),Color.green(color), Color.blue(color));
 					
 					updateUI();
 					}
