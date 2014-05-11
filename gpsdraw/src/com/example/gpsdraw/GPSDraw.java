@@ -501,6 +501,7 @@ public class GPSDraw extends Activity implements
 						
 						Toast.makeText(getActivity(), "Please Lift the Pen",
 								Toast.LENGTH_SHORT).show();
+						
 					}
 					
 				}
