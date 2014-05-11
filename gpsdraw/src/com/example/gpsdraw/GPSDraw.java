@@ -19,7 +19,9 @@ import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Polyline;
 import com.google.android.gms.maps.model.PolylineOptions;
 
+import edu.uci.ics.ics163.gpsdrawupload.Point;
 import edu.uci.ics.ics163.gpsdrawupload.StrokeManager;
+import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -88,9 +90,14 @@ public class GPSDraw extends Activity implements
 		
 		public int color;
 		public List<LatLng> path;
+		public String name;
+		public List<Point> points;
+		
 		public Stroke() {
 			path = new LinkedList<LatLng>();
+			points = new LinkedList<Point>();
 			touched = false;
+			name = "Stroke" + strokes.size();
 		}
 	};
 
@@ -216,31 +223,13 @@ public class GPSDraw extends Activity implements
 				public boolean onTouch(View v, MotionEvent event) {
 					color = cw.bmp.getPixel((int)event.getX(), (int)event.getY());
 					cwc.setColor(Color.red(color)/255.0f, Color.green(color)/255.0f, Color.blue(color)/255.0f);
+					strokeManager.setStrokeColor("s", (int)cwc.r, (int)cwc.g, (int)cwc.b);
 					cwc.invalidate();
 					return false;
 				}
 			});	
 			
-			Button btnUpload = (Button) rootView
-					.findViewById(R.id.buttonUpload);
-			btnUpload.setOnClickListener(new OnClickListener() {
-				@Override
-				public void onClick(View v) {
-					if(!penState)
-					{
-						strokeManager.upload(groupId, drawingId);
-						
-					}
-					else
-					{
-						
-						Toast.makeText(getActivity(), "Please Lift the Pen",
-								Toast.LENGTH_SHORT).show();
-					}
-					
-				}
-			});
-			
+		
 
 			Button btnBack = (Button) rootView
 					.findViewById(R.id.buttonColorWheelBack);
@@ -414,6 +403,7 @@ public class GPSDraw extends Activity implements
 					{
 						Stroke s = new GPSDraw.Stroke();
 						strokes.add(s);
+						
 					}
 					penState = isChecked;
 				}
@@ -490,7 +480,32 @@ public class GPSDraw extends Activity implements
 							.replace(R.id.container, new ColorWheelFragment())
 							.commit();
 				}
-			});		
+			});	
+			
+			
+			Button btnUpload = (Button) rootView
+					.findViewById(R.id.buttonUpload);
+			btnUpload.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					if(!penState)
+					{
+						strokeManager.upload(groupId, drawingId);
+						
+						Toast.makeText(getActivity(), "Uploaded",
+								Toast.LENGTH_SHORT).show();
+					}
+					else
+					{
+						
+						Toast.makeText(getActivity(), "Please Lift the Pen",
+								Toast.LENGTH_SHORT).show();
+					}
+					
+				}
+			});
+			
+			
 			
 			if (updateLatLng)
 			{
@@ -585,6 +600,7 @@ public class GPSDraw extends Activity implements
 				{
 					latitude = arg0.getLatitude();
 					longitude = arg0.getLongitude();
+					long time = arg0.getTime();
 					lastLocation = "(" + latitude + "," + longitude + ")";
 					
 					cheese = new LatLng(latitude, longitude);
@@ -592,6 +608,8 @@ public class GPSDraw extends Activity implements
 					Stroke s = getLastStroke();
 					if (s != null)
 						s.path.add(new LatLng(latitude, longitude));
+						Point p = new Point(time, latitude, longitude);
+						s.points.add(p);
 					
 					updateUI();
 				}
