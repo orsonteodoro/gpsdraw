@@ -75,6 +75,7 @@ public class GPSDraw extends Activity implements
 	
 	private static int FASTEST_UPDATE = 1000;
 	private static int NORMAL_UPDATE = 5000;
+	public static UploadCallback callback;
 	
 	PowerManager powerManager;
 	WakeLock wakeLock;
@@ -123,7 +124,7 @@ public class GPSDraw extends Activity implements
 		        "MyWakelockTag");
 		wakeLock.acquire();	
 		
-		strokeManager = new StrokeManager();
+		strokeManager = new StrokeManager(callback);
 	}
 
 	@Override
