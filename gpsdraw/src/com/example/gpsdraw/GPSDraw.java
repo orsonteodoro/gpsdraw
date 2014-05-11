@@ -21,6 +21,7 @@ import com.google.android.gms.maps.model.PolylineOptions;
 
 import edu.uci.ics.ics163.gpsdrawupload.Point;
 import edu.uci.ics.ics163.gpsdrawupload.StrokeManager;
+import edu.uci.ics.ics163.gpsdrawupload.UploadCallback;
 import android.R.string;
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -607,11 +608,14 @@ public class GPSDraw extends Activity implements
 					
 					Stroke s = getLastStroke();
 					if (s != null)
+					{
 						s.path.add(new LatLng(latitude, longitude));
 						Point p = new Point(time, latitude, longitude);
 						s.points.add(p);
+						strokeManager.addPoint(s.name, p);
 					
 					updateUI();
+					}
 				}
 			}
 		});
